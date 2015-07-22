@@ -136,7 +136,7 @@ $(document).on('change', '#select_quest', function(e){
 
 			for(var i = 1; i <= data[0]["cuantas_respuestas"]; i++){
 				//console.log(i)
-				$('#respuestas').append('Respuesta '+i+': <input id="resp'+i+'" type="text" value="'+res[(i-1)]+'"><br>')
+				$('#respuestas').append('Respuesta '+i+': <input class="respuestas" id="resp'+i+'" type="text" value="'+res[(i-1)]+'"><br>')
 			}
 
 			var x = document.getElementById("div_cuantas_resp");
@@ -153,6 +153,11 @@ $(document).on('change', '#select_quest', function(e){
 })
 
 
+$(document).on('keyup', '.respuestas, #contenido', function(){
+
+	$('#save_quest').removeAttr('disabled')
+
+})
 
 // ================== Eventos para crear nuevo cuestionario ===========================================
 
