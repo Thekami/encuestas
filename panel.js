@@ -5,6 +5,12 @@ var cuestionario = [];
 
 var name_poll = "";
 
+var contenido_edit = "";
+
+var cuantas_respuestas_edit = "";
+
+var tipo_resp_edit = "";
+
 $('document').ready(function(){
 
 	//en cuanto cargue la pagina escondera el div de "nueva pregunta" (main2) y el de "Enviar encuesta" (main3)
@@ -119,8 +125,13 @@ $(document).on('change', '#select_quest', function(e){
 									'</div>'+
 									'<div id="respuestas">'+
 									'</div><br>'+
-									'<input type="submit" value="Guardar" disabled id="save_quest">'+
+									'<input type="submit" value="Guardar" disabled id="save_quest_edit">'+
 								'</form>')
+
+			contenido_edit = $('#contenido').val() //variable global
+
+			tipo_resp_edit = data[0]["tipo_resp"]; //variable global
+			//console.log(contenido_edit)
 
 			if (data[0]["tipo_resp"] == 1)
 				document.getElementById("tipo_resp").selectedIndex = "1";
@@ -134,18 +145,22 @@ $(document).on('change', '#select_quest', function(e){
 			var res = data[0]["respuestas"].split(",")
 			//console.log(res)
 
-			for(var i = 1; i <= data[0]["cuantas_respuestas"]; i++){
+			cuantas_respuestas_edit = data[0]["cuantas_respuestas"]; //variable global
+
+			for(var i = 1; i <= cuantas_respuestas_edit; i++){
 				//console.log(i)
 				$('#respuestas').append('Respuesta '+i+': <input class="respuestas" id="resp'+i+'" type="text" value="'+res[(i-1)]+'"><br>')
 			}
 
-			var x = document.getElementById("div_cuantas_resp");
+			var x = document.getElementById("respuestas");
 			var text = "";
 		    var i;
 		    for (i = 0; i < x.length ;i++) {
 		        text += x.elements[i].value;
 		    }
 			console.log(text)
+
+			
 			
 		}
 	})
@@ -155,7 +170,141 @@ $(document).on('change', '#select_quest', function(e){
 
 $(document).on('keyup', '.respuestas, #contenido', function(){
 
-	$('#save_quest').removeAttr('disabled')
+	$('#save_quest_edit').removeAttr('disabled')
+
+})
+
+
+$(document).on('click', '#save_quest_edit', function(e){
+	e.preventDefault()
+
+	var contenido = $('#contenido').val()
+	var tipo_resp = $('#tipo_resp').val()
+
+	name_poll = $('#select_poll').val()
+
+	//console.log(contenido)
+	//console.log(tipo_resp)
+		
+	var pregunta = {name_poll: name_poll, contenido: contenido_edit, new_contenido: contenido, 
+					tipo_resp: tipo_resp, cuantas_respuestas: "", respuestas: ""}
+
+	if (tipo_resp == 1) {
+		pregunta.cuantas_respuestas = 0;
+		pregunta.respuestas = 0;
+		pregunta.cuantas_respuestas = 0;
+
+	}
+
+	if (tipo_resp == 2 || tipo_resp == 3) {
+
+		if (tipo_resp == tipo_resp_edit) {
+
+			pregunta.cuantas_respuestas = cuantas_respuestas_edit;
+			var respuestas = [];
+
+			for(var i = 1; i <= cuantas_respuestas_edit; i++){
+				if ($('#resp'+i+'').val() != "") {
+					respuestas.push($('#resp'+i+'').val())
+				}
+			}
+			pregunta.respuestas = respuestas;
+			console.log(pregunta.respuestas)
+
+		}else{
+			
+			cuantas = $('#many_opts').val()
+			pregunta.cuantas_respuestas = cuantas;
+			var respuestas = [];
+
+			for(var i = 1; i <= cuantas; i++){
+				if ($('#resp'+i+'').val() != "") {
+					respuestas.push($('#resp'+i+'').val())
+				}
+			}
+			pregunta.respuestas = respuestas;
+			console.log(pregunta.respuestas)
+
+		}
+		
+
+	}
+
+
+	if (pregunta.contenido != "" && pregunta.tipo_resp != "") {
+		
+		if (pregunta.tipo_resp == 1) {
+
+			cuestionario.push(pregunta)
+			console.log(pregunta+1)
+
+			$.ajax({
+				url:'edit.php',
+				type:'post',
+				data: {data: pregunta},
+				//dataType:'json',
+				error: function(error){
+					console.log("error")
+				},
+				success: function(data){
+					console.log(data)
+					$('#select_poll').trigger('change')
+					if (data) {
+						console.log("se guardo bien")
+						$('#div_main2').css('display', 'none')
+						$('#div_main3').css('display', 'none')
+						
+					}else{
+						console.log("no se guardo bien")
+					}
+
+				}
+			})
+
+			/*$('#div_main2').css('display', 'block')
+			$('#div_create').css('display', 'none')
+			$('#div_main3').css('display', 'block')*/
+
+		}else if(pregunta.cuantas_respuestas != "" && pregunta.respuestas.length == pregunta.cuantas_respuestas){
+
+			cuestionario.push(pregunta)
+			console.log(pregunta+2)
+
+			$.ajax({
+				url:'edit.php',
+				type:'post',
+				data: {data: pregunta},
+				//dataType:'json',
+				error: function(error){
+					console.log("error")
+				},
+				success: function(data){
+					console.log(data)
+					$('#select_poll').trigger('change')
+					if (data) {
+						console.log("se guardo bien")
+						$('#div_main2').css('display', 'none')
+						$('#div_main3').css('display', 'none')
+						
+					}else{
+						console.log("no se guardo bien")
+					}
+
+				}
+			})
+			/*$('#div_main2').css('display', 'block')
+			$('#div_create').css('display', 'none')
+			$('#div_main3').css('display', 'block')*/
+
+		}else{
+			alert("debe llenar todos los campos antes de poder continuar")
+		}
+			
+
+	}else{
+		alert("debe llenar todos los campos antes de poder continuar")
+	}
+
 
 })
 
@@ -222,6 +371,7 @@ $(document).on('change', '#tipo_resp', function(e){
 
 	var tipo_resp = $('#tipo_resp').val()
 	//console.log(tipo_resp)
+	$('#save_quest_edit').removeAttr('disabled')
 
 	if (tipo_resp == 1) {
 		$('#respuestas').empty()
@@ -347,14 +497,7 @@ $(document).on('click', '#send_poll', function(e){
 				console.log("se guardo bien")
 				$('#div_main2').css('display', 'none')
 				$('#div_main3').css('display', 'none')
-				$('#div_create').css('display', 'block')
-				$('#div_create').empty()
-				$('#div_create').append('<form action="">'+
-									   	'<label for=""> Crear nueva encuesta</label>'+
-									   	'<input type="submit" value="Crear" id="make_poll">'+
-									   	'<label for=""> Editar encuesta</label>'+
-									    '<input type="submit" value="Editar" id="edit_poll">'+
-								   	  '</form>')
+				
 			}else{
 				console.log("no se guardo bien")
 			}
