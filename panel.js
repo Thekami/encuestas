@@ -15,10 +15,11 @@ $('document').ready(function(){
 
 	//en cuanto cargue la pagina escondera el div de "nueva pregunta" (main2) y el de "Enviar encuesta" (main3)
 	$('#div_create').css('display', 'none')
-	$('#div_main2').css('display', 'none')
-	$('#div_main3').css('display', 'none')
+	$('#div_btn_new_quest').css('display', 'none')
+	$('#div_btn_send_poll').css('display', 'none')
 	$('#div_edit').css('display', 'none')
 	$('#div_show_edit').css('display', 'none')
+	$('#div_show_url').css('display', 'none')
 
 
 })//ready
@@ -31,9 +32,10 @@ $(document).on('click', '#edit_poll', function(e){
 	e.preventDefault()
 
 	$('#div_edit').css('display', 'none')
-	$('#div_main2').css('display', 'none')
-	$('#div_main3').css('display', 'none')
+	$('#div_btn_new_quest').css('display', 'none')
+	$('#div_btn_send_poll').css('display', 'none')
 	$('#div_create').css('display', 'none')
+	$('#div_show_url').css('display', 'none')
 
 
 	$.ajax({
@@ -152,14 +154,6 @@ $(document).on('change', '#select_quest', function(e){
 				$('#respuestas').append('Respuesta '+i+': <input class="respuestas" id="resp'+i+'" type="text" value="'+res[(i-1)]+'"><br>')
 			}
 
-			var x = document.getElementById("respuestas");
-			var text = "";
-		    var i;
-		    for (i = 0; i < x.length ;i++) {
-		        text += x.elements[i].value;
-		    }
-			console.log(text)
-
 			
 			
 		}
@@ -251,8 +245,8 @@ $(document).on('click', '#save_quest_edit', function(e){
 					$('#select_poll').trigger('change')
 					if (data) {
 						console.log("se guardo bien")
-						$('#div_main2').css('display', 'none')
-						$('#div_main3').css('display', 'none')
+						$('#div_btn_new_quest').css('display', 'none')
+						$('#div_btn_send_poll').css('display', 'none')
 						
 					}else{
 						console.log("no se guardo bien")
@@ -261,9 +255,9 @@ $(document).on('click', '#save_quest_edit', function(e){
 				}
 			})
 
-			/*$('#div_main2').css('display', 'block')
+			/*$('#div_btn_new_quest').css('display', 'block')
 			$('#div_create').css('display', 'none')
-			$('#div_main3').css('display', 'block')*/
+			$('#div_btn_send_poll').css('display', 'block')*/
 
 		}else if(pregunta.cuantas_respuestas != "" && pregunta.respuestas.length == pregunta.cuantas_respuestas){
 
@@ -283,8 +277,8 @@ $(document).on('click', '#save_quest_edit', function(e){
 					$('#select_poll').trigger('change')
 					if (data) {
 						console.log("se guardo bien")
-						$('#div_main2').css('display', 'none')
-						$('#div_main3').css('display', 'none')
+						$('#div_btn_new_quest').css('display', 'none')
+						$('#div_btn_send_poll').css('display', 'none')
 						
 					}else{
 						console.log("no se guardo bien")
@@ -292,9 +286,9 @@ $(document).on('click', '#save_quest_edit', function(e){
 
 				}
 			})
-			/*$('#div_main2').css('display', 'block')
+			/*$('#div_btn_new_quest').css('display', 'block')
 			$('#div_create').css('display', 'none')
-			$('#div_main3').css('display', 'block')*/
+			$('#div_btn_send_poll').css('display', 'block')*/
 
 		}else{
 			alert("debe llenar todos los campos antes de poder continuar")
@@ -314,10 +308,16 @@ $(document).on('click', '#save_quest_edit', function(e){
 $(document).on('click', '#make_poll', function(e){
 	e.preventDefault()
 
+	preguntas = 0;
+	cuestionario = [];
 	//escondo el primero div (el que da las opciones de nueva encuesta y editar encuesta)
 	$('#div_create').css('display', 'block')
 	$('#div_edit').css('display', 'none')
 	$('#div_show_edit').css('display', 'none')
+	$('#div_show_url').css('display', 'none')
+	$('#div_btn_new_quest').css('display', 'none')
+	$('#div_btn_send_poll').css('display', 'none')
+
 
 	$('#div_create').empty()
 	$('#div_create').append('<form action="">'+
@@ -333,31 +333,16 @@ $(document).on('click', '#new_quest', function(e){
 	if ($('#name_poll').val() != "") {
 
 		$('#div_create').css('display', 'block')
-		$('#div_main2').css('display', 'none')
+		$('#div_btn_new_quest').css('display', 'none')
+		$('#div_btn_send_poll').css('display', 'none')
 
 		preguntas++;
 
 		if (preguntas == 1)
 			name_poll = $('#name_poll').val();
+			console.log(name_poll)
 
-		$('#div_create').empty()
-		$('#div_create').append('<form id="preg_'+preguntas+'" action="">'+
-								'<h4>Pregunta '+preguntas+'</h4>'+
-								'Contenido <input id="contenido" type="text"><br><br>'+
-								'Tipo de respuesta '+
-									'<select id="tipo_resp" name="" id="">'+
-										'<option value="0" selected disabled>Seleccione una opcion</option>'+
-										'<option value="1">Abierta</option>'+
-										'<option value="2">Opcion multiple</option>'+
-										'<option value="3">Multiseleccion</option>'+
-									'</select><br><br>'+
-								'<div id="div_cuantas_resp">'+
-								'</div>'+
-								'<div id="respuestas">'+
-								'</div><br>'+
-								'<input type="submit" value="Guardar" disabled id="save_quest">'+
-							'</form>')
-
+		new_quest(preguntas)
 
 	}else{
 		alert("Proporcione primero el nombre de la encuesta")
@@ -379,7 +364,7 @@ $(document).on('change', '#tipo_resp', function(e){
 		$('#save_quest').removeAttr('disabled')
 	}
 
-	if (tipo_resp == 2) {
+	if (tipo_resp == 2 || tipo_resp == 3 || tipo_resp == 4) {
 		$('#respuestas').empty()
 		$('#div_cuantas_resp').empty()
 		$('#div_cuantas_resp').append('¿Cuantas? <input id="many_opts" type="text"><br>'+
@@ -387,13 +372,13 @@ $(document).on('change', '#tipo_resp', function(e){
 		$('#save_quest').attr('disabled', 'disabled')
 	}
 
-	if (tipo_resp == 3) {
+	/*if (tipo_resp == 3) {
 		$('#respuestas').empty()
 		$('#div_cuantas_resp').empty()
 		$('#div_cuantas_resp').append('¿Cuantas? <input id="many_opts" type="text"><br>'+
 									'<input type="button" value="Crear respuestas" id="make_opt">')
 		$('#save_quest').attr('disabled', 'disabled')
-	}
+	}*/
 
 })
 
@@ -434,7 +419,7 @@ $(document).on('click', '#save_quest', function(e){
 
 	}
 
-	if (tipo_resp == 2 || tipo_resp == 3) {
+	if (tipo_resp == 2 || tipo_resp == 3 || tipo_resp == 4) {
 
 		var	cuantas = $('#many_opts').val()
 		pregunta.cuantas_respuestas = cuantas;
@@ -455,24 +440,26 @@ $(document).on('click', '#save_quest', function(e){
 		if (pregunta.tipo_resp == 1) {
 
 			cuestionario.push(pregunta)
-			$('#div_main2').css('display', 'block')
+			$('#div_btn_new_quest').css('display', 'block')
 			$('#div_create').css('display', 'none')
-			$('#div_main3').css('display', 'block')
+			$('#div_btn_send_poll').css('display', 'block')
 
 		}else if(pregunta.cuantas_respuestas != "" && pregunta.respuestas.length == pregunta.cuantas_respuestas){
 
 			cuestionario.push(pregunta)
-			$('#div_main2').css('display', 'block')
+			$('#div_btn_new_quest').css('display', 'block')
 			$('#div_create').css('display', 'none')
-			$('#div_main3').css('display', 'block')
+			$('#div_btn_send_poll').css('display', 'block')
 
 		}else{
 			alert("debe llenar todos los campos antes de poder continuar")
+			console.log(1)
 		}
 			
 
 	}else{
 		alert("debe llenar todos los campos antes de poder continuar")
+		console.log(2)
 	}
 
 	
@@ -482,6 +469,8 @@ $(document).on('click', '#save_quest', function(e){
 
 $(document).on('click', '#send_poll', function(e){
 	e.preventDefault()
+
+	preguntas = 0;
 
 	$.ajax({
 		url:'save.php',
@@ -494,14 +483,43 @@ $(document).on('click', '#send_poll', function(e){
 		success: function(data){
 			//console.log(data)
 			if (data) {
+				console.log(data)
 				console.log("se guardo bien")
-				$('#div_main2').css('display', 'none')
-				$('#div_main3').css('display', 'none')
+				$('#div_btn_new_quest').css('display', 'none')
+				$('#div_show_url').css('display', 'block')
+				$('#div_show_url').empty()
+				$('#div_show_url').append('<p>localhost/encuestas?src='+data+'</p>')
+				$('#div_btn_send_poll').css('display', 'none')
+				
 				
 			}else{
 				console.log("no se guardo bien")
+
 			}
 
 		}
 	})
 })
+
+
+function new_quest(preguntas){
+	$('#div_create').empty()
+	$('#div_create').append('<form id="preg_'+preguntas+'" action="">'+
+							'<h4>Pregunta '+preguntas+'</h4>'+
+							'Contenido <input id="contenido" type="text"><br><br>'+
+							'Tipo de respuesta '+
+								'<select id="tipo_resp" name="" id="">'+
+									'<option value="0" selected disabled>Seleccione una opcion</option>'+
+									'<option value="1">Abierta</option>'+
+									'<option value="2">Opcion multiple</option>'+
+									'<option value="3">Multiseleccion</option>'+
+									'<option value="4">Select</option>'+
+								'</select><br><br>'+
+							'<div id="div_cuantas_resp">'+
+							'</div>'+
+							'<div id="respuestas">'+
+							'</div><br>'+
+							'<input type="submit" value="Guardar" disabled id="save_quest">'+
+						'</form>')
+
+}

@@ -29,7 +29,13 @@ for ($i=0; $i < count($data); $i++) {
 						   	   VALUES ('$poll', '$contenido', '$cuantas_respuestas', '$tipo_resp', '$respuestas_es')";
 
 	if ($main->query($consult)) {
-		$response = true;
+
+		$link=utf8_encode($poll);
+		$key="c0d1g0j0v3n";
+		$link=$key.$link.$key;
+		$response=base64_encode($link);
+
+		//$response = true;
 	}else{
 		$response = false;
 	}
