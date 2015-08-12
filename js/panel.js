@@ -30,6 +30,7 @@ $('document').ready(function(){
 
 $(document).on('click', '#edit_poll', function(e){
 	e.preventDefault()
+	//alert()
 
 	$('#div_edit').css('display', 'none')
 	$('#div_btn_new_quest').css('display', 'none')
@@ -39,9 +40,9 @@ $(document).on('click', '#edit_poll', function(e){
 
 
 	$.ajax({
-		url:'data_edit.php',
+		url:'resources/Ajax.php',
 		type:'post',
-		//data: {},
+		data: {action: "data_edit"},
 		dataType:'json',
 		error: function(error){
 			console.log("error")
@@ -68,9 +69,9 @@ $(document).on('change', '#select_poll', function(e){
 	var poll = $('#select_poll').val();
 
 	$.ajax({
-		url:'get_quest.php',
+		url:'resources/Ajax.php',
 		type:'post',
-		data: {poll: poll},
+		data: {poll: poll, action: "get_quest"},
 		dataType:'json',
 		error: function(error){
 			console.log("error")
@@ -102,9 +103,9 @@ $(document).on('change', '#select_quest', function(e){
 	//console.log(poll)
 
 	$.ajax({
-		url:'get_info_quest.php',
+		url:'resources/Ajax.php',
 		type:'post',
-		data: {poll: poll, quest: quest},
+		data: {poll: poll, quest: quest, action: "get_info_quest"},
 		dataType:'json',
 		error: function(error){
 			console.log("error")
@@ -233,9 +234,9 @@ $(document).on('click', '#save_quest_edit', function(e){
 			console.log(pregunta+1)
 
 			$.ajax({
-				url:'edit.php',
+				url:'resources/Ajax.php',
 				type:'post',
-				data: {data: pregunta},
+				data: {data: pregunta, action: "edit"},
 				//dataType:'json',
 				error: function(error){
 					console.log("error")
@@ -265,7 +266,7 @@ $(document).on('click', '#save_quest_edit', function(e){
 			console.log(pregunta+2)
 
 			$.ajax({
-				url:'edit.php',
+				url:'resources/edit.php',
 				type:'post',
 				data: {data: pregunta},
 				//dataType:'json',
@@ -304,6 +305,26 @@ $(document).on('click', '#save_quest_edit', function(e){
 
 // ================== Eventos para crear nuevo cuestionario ===========================================
 
+$(document).on('blur', '#name_poll', function(){
+
+	var txt_name_poll = $('#name_poll').val()
+
+	$.ajax({
+		url:'resources/Ajax.php',
+		type:'post',
+		data: {poll: txt_name_poll, action: "check_poll"},
+		//dataType:'json',
+		error: function(error){
+			console.log("error")
+		},
+		success: function(data){
+			if (data)
+				alert("El nombre que selecciono ya existe, intente con otro")
+
+		}
+	})
+
+})
 //Evento para crear el html del formulario para ingresar el nombre de la encuesta a  crear
 $(document).on('click', '#make_poll', function(e){
 	e.preventDefault()
@@ -410,7 +431,9 @@ $(document).on('click', '#save_quest', function(e){
 	//console.log(contenido)
 	//console.log(tipo_resp)
 		
-	var pregunta = {name_poll: name_poll, contenido: contenido, tipo_resp: tipo_resp, cuantas_respuestas: "", respuestas: ""}
+	var pregunta = {name_poll: name_poll, contenido: contenido, 
+					tipo_resp: tipo_resp, cuantas_respuestas: "", 
+					respuestas: "", no_preg: preguntas}
 
 	if (tipo_resp == 1) {
 		pregunta.cuantas_respuestas = 0;
@@ -473,9 +496,9 @@ $(document).on('click', '#send_poll', function(e){
 	preguntas = 0;
 
 	$.ajax({
-		url:'save.php',
+		url:'resources/Ajax.php',
 		type:'post',
-		data: {data: cuestionario},
+		data: {data: cuestionario, action: "save"},
 		//dataType:'json',
 		error: function(error){
 			console.log("error")
@@ -488,7 +511,7 @@ $(document).on('click', '#send_poll', function(e){
 				$('#div_btn_new_quest').css('display', 'none')
 				$('#div_show_url').css('display', 'block')
 				$('#div_show_url').empty()
-				$('#div_show_url').append('<p>localhost/encuestas?src='+data+'</p>')
+				$('#div_show_url').append('<p>localhost/encuestas/ver.php?src='+data+'</p>')
 				$('#div_btn_send_poll').css('display', 'none')
 				
 				
@@ -523,3 +546,19 @@ function new_quest(preguntas){
 						'</form>')
 
 }
+
+var contenido_txt_cant = "";
+$(document).on('keyup', '#many_opts', function(event){ 					
+																	
+	var caracteres = $(this).val();									
+																	
+	if (caracteres.match(/[^1234567890]/g) ){										
+		//console.log('danger','ERROR','Solo se permite letras o numeros')	
+		$(this).val(contenido_txt_cant);
+	}else{								
+		contenido_txt_cant = $(this).val();
+	}																					
+																	
+																						
+});	
+

@@ -1,3 +1,14 @@
+<?php 
+
+
+    session_start();
+    if (!isset($_SESSION["username"]) && !isset($_SESSION["id"])) {
+
+        //redireccion a index en el caso que no se halla iniciado sesion
+        Header('Location: landing.php');
+    }        
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +16,13 @@
 	<title>Crear Encuesta</title>
 </head>
 <body>
-
+	
 	<div id="div_main" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
-		
+		<!-- <h2>Hola <?php echo $_SESSION["username"]; ?>!</h2> -->
+		<a href="logout.php">Cerrar Sesion</a>
+	</div>
+	
+	<div id="div_main" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
 		<form action="">
 			<label for=""> Crear nueva encuesta</label>
 			<input type="submit" value="Crear" id="make_poll">
@@ -63,7 +78,7 @@
 
 	</div>
 	
-	<script src="jquery-1.11.2.min.js"></script>
-	<script src="panel.js"></script>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/panel.js"></script>
 </body>
 </html>

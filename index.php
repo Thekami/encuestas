@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title> Ver Encuesta</title>
+	<title>Login</title>
 </head>
 <body>
+	<form action="">
+		<h3>Inicio de Sesion</h3>
+		<input type="text" placeholder="Usuario" id="txt_user">
+		<input type="password" placeholder="Contraseña" id="txt_pass">
+		<input type="submit" value="Enviar" id="btn_login">
+		<p id="msgText"></p>
+	</form>
 
-	<div id="main" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
-							
-	</div>
-	
-	<script src="jquery-1.11.2.min.js"></script>
-	<script src="index.js"></script>
-	<script src="base64js.js"></script>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/index.js"></script>
+
 </body>
 </html>
