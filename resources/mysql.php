@@ -10,7 +10,7 @@ var $dbCon;
 	}
 
 	public function conect(){
-		$enlace = mysql_connect('localhost', 'root', 'toor');
+		$enlace = mysql_connect('localhost', 'root', '');
 		//coreccion en la ñ
 		mysql_query("SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'", $enlace);
 		//$dbCon = mysql_select_db('metsi', $enlace);

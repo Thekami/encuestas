@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title> Ver Encuesta</title>
+	<title> Ver respuestas</title>
 </head>
 <body>
 
