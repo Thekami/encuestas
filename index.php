@@ -4,14 +4,33 @@
 	<meta charset="UTF-8">
 	<title>Login</title>
 </head>
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
 <body>
-	<form action="">
-		<h3>Inicio de Sesion</h3>
-		<input type="text" placeholder="Usuario" id="txt_user">
-		<input type="password" placeholder="Contraseña" id="txt_pass">
-		<input type="submit" value="Enviar" id="btn_login">
-		<p id="msgText"></p>
-	</form>
+
+	<div class="login">
+
+		<!-- <h1>Encuestas código joven</h1> -->
+		
+		<!-- <div class="row" style=""> -->
+			
+			<div>
+
+				<form action="">
+					<h3>Inicio de Sesion</h3>
+					<input type="text" placeholder="Usuario" id="txt_user">
+					<input type="password" placeholder="Contraseña" id="txt_pass">
+					<input type="submit" value="Enviar" id="btn_login">
+					<p id="msgText"></p>
+				</form>
+
+			</div>
+
+		<!-- </div> -->
+
+	</div>
 
 	<script src="js/jquery-1.11.2.min.js"></script>
 	<script src="js/index.js"></script>

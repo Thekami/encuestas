@@ -16,6 +16,8 @@
 	<meta charset="UTF-8">
 	<title> Encuesta: <?php  echo $poll;?></title>
 </head>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
 <body>
 
 	<div id="main" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
