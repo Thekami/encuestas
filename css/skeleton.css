@@ -25,12 +25,27 @@
 - Media Queries
 */
 
+.form-login{
+  border: 1px solid #E1E1E1; 
+  padding: 3% 5% 5% 8%;
+}
+
+.form-login-head{
+  margin: auto auto 7% auto;
+}
+
+.form-login-body{
+  margin: 3% auto auto auto;
+}
+
 .login {
   position: relative;
-  width: 100%;
+  /*width: 100%;*/
   max-width: 960px;
+  width: 50%;
+  margin: 0 auto;
  /* margin: 3% 30%;*/
-  padding: 3% 15% 0 15%;
+  padding: 10% 10% 0 10%;
   box-sizing: border-box; }
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -131,7 +146,8 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
+  /*color: #222;*/
+  background-color: #F8F8F8; }
 
 
 /* Typography
