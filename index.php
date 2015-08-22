@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
 
+  <style>
+  body{
+	background-color: #F8F8F8;
+  	}
+  </style>
+
 <body>
 
 	<div class="login">

@@ -17,24 +17,32 @@
 </head>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link href='//fonts.gstatic.com/s/raleway/v9/xkvoNo9fC8O2RDydKj12bwzyDMXhdD8sAj6OAJTFsBI.woff2' rel='stylesheet' type='text/css'>
 <body>
-	<div class="container">
-		<div id="div_main" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
-			<!-- <h2>Hola <?php echo $_SESSION["username"]; ?>!</h2> -->
-			<a href="logout.php">Cerrar Sesion</a>
-		</div>
-		
-			
-		
-		<div id="div_main" class="row" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
-			<form action="">
-				<label for=""> Crear nueva encuesta</label>
-				<input type="submit" value="Crear" id="make_poll">
-				<label for=""> Editar encuesta</label>
-				<input type="submit" value="Editar" id="edit_poll">
-			</form>
 
+<!-- 	<nav class="primary">
+		<div class="container">
+		    <ul>
+		        <li><a style="color: #222" class="navbar-link" id="make_poll" href="#">Nueva encuesta</a></li>
+		        <li><a style="color: #222" class="navbar-link" id="edit_poll" href="#">Editar encuesta</a></li>
+		        <li><a style="color: #222" class="navbar-link" href="logout.php">Cerrar Sesion</a></li>
+		    </ul>
 		</div>
+	</nav> -->
+	<div class="navbar-container">
+		<nav class="primary">
+			<div class="container">
+			    <ul class="navbar-list">
+			        <li class="navbar-item" ><a class="navbar-link" id="make_poll" href="#">Nueva encuesta</a></li>
+			        <li class="navbar-item" ><a class="navbar-link" id="edit_poll" href="#">Editar encuesta</a></li>
+			        <li class="navbar-item" ><a class="navbar-link" href="logout.php">Cerrar Sesion</a></li>
+			    </ul>
+			</div>
+		</nav>
+	</div>
+	
+
+	<div class="container">
 
 		<div id="div_edit" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
 			
@@ -82,7 +90,9 @@
 
 		</div>
 	</div>
+
 	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/static-nav.js"></script>
 	<script src="js/panel.js"></script>
 </body>
 </html>

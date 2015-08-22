@@ -11,7 +11,6 @@
 /* Table of contents
 ––––––––––––––––––––––––––––––––––––––––––––––––––
 - Navbar
-- Navbar2
 - Login
 - Grid
 - Base Styles
@@ -28,55 +27,96 @@
 - Media Queries
 */
 
+@font-face {
+    font-family: "Raleway";
+    font-style: normal;
+    font-weight: 600;
+    src: local("Raleway SemiBold"), local("Raleway-SemiBold"), url("http://fonts.gstatic.com/s/raleway/v9/xkvoNo9fC8O2RDydKj12bwzyDMXhdD8sAj6OAJTFsBI.woff2") format("woff2"), url("http://fonts.gstatic.com/s/raleway/v9/xkvoNo9fC8O2RDydKj12b73hpw3pgy2gAi-Ip7WPMi0.woff") format("woff");
+  }
+
+
+
+/*.custom-container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; 
+}*/
+
 /* Navbar
 ----------------------------------------------------------*/
-nav.primary{
+.primary{
   display: table;
   margin: 0 auto;
   width: 100%;
   margin-bottom: 3%;
   border-bottom: solid 1px #bcb8ae; 
   border-top: solid 1px #bcb8ae;
-   }
-  nav.primary ul,
-  nav.primary ul li {
-  margin: 0px;
+  /*position: fixed;*/
+  background-color: #F5F5F5;  
+}
+
+  .primary ul,
+  .primary ul li {
+    margin: 0px;
+    color: white;
   }
 
-  nav.primary select {
-  display: none;
-  width:  100%;
-  height: 28px;
-  margin: 21px 0;
+  .primary select {
+    display: none;
+    width:  100%;
+    height: 28px;
+    margin: 21px 0;
   }
 
-  nav.primary ul li {
-  display: inline;
-  float: left;
-  position: relative;}
-
-  nav.primary ul li a {
-  display: inline-block;
-  line-height: 49px;
-  padding:  0 14px;
-  color: black;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-weight: Raleway;
-  letter-spacing: 0.08em;
-  background: ##999999;
-
+  .primary ul li {
+    display: inline;
+    float: left;
+    position: relative;
   }
 
-  nav.primary ul li a:hover {
-  background: #d9e7e6;
-  cursor: pointer;
-
+  .primary ul li a {
+    display: inline-block;
+    line-height: 49px;
+    padding:  0 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: Raleway;
+    letter-spacing: 0.15em;
   }
 
-  /* Navbar2
+/* .primary ul li a:hover {
+    background: #d9e7e6;
+    cursor: pointer;
+
+  }*/
+
+  .shadow {
+    box-shadow: 1px 1px 5px gray;
+  }
+
+  .fixed {
+      position:fixed;
+      border-bottom: 1px solid #DDD;
+      top: 0px;
+      background-color: #F5F5F5;
+      width: 100%;
+      left:0px;
+      z-index: 1000;
+  }
+ 
+  .scrolling {
+      margin-top:40px !important;
+  }
+
+/* Navbar2
   ------------------------------------------------------------*/
 
+.navbar-container{
+  margin-bottom: 3%;
+}
 .navbar{
     display: block;
     width: 100%;
@@ -140,7 +180,7 @@ nav.primary{
   position: relative;
   width: 100%;
   max-width: 960px;
-  margin: 0 auto;
+  margin: 0 auto 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
 .column,
@@ -233,8 +273,12 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  /*color: #222;*/
-  background-color: #F8F8F8; }
+  color: #222;
+  /*background-color: #FFF;*/
+  background-image:url("../images/background-home.jpg");
+  /*color: white;
+  background-image:url("../images/fondo.jpg");*/
+}
 
 
 /* Typography
@@ -270,7 +314,6 @@ a {
   color: #1EAEDB; }
 a:hover {
   color: #0FA0CE; }
-
 
 /* Buttons
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -349,8 +392,12 @@ select {
   border: 1px solid #D1D1D1;
   border-radius: 4px;
   box-shadow: none;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  /*background-color: transparent;*/ }
 /* Removes awkward default styles on some inputs for iOS */
+option{
+  color: #222;
+}
 input[type="email"],
 input[type="number"],
 input[type="search"],
@@ -359,6 +406,7 @@ input[type="tel"],
 input[type="url"],
 input[type="password"],
 textarea {
+  /*background-color: transparent;*/
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none; }
