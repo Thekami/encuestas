@@ -11,6 +11,7 @@ var cuantas_respuestas_edit = "";
 
 var tipo_resp_edit = "";
 
+
 $('document').ready(function(){
 
 	//en cuanto cargue la pagina escondera el div de "nueva pregunta" (main2) y el de "Enviar encuesta" (main3)
@@ -341,11 +342,23 @@ $(document).on('click', '#make_poll', function(e){
 
 
 	$('#div_create').empty()
-	$('#div_create').append('<form action="">'+
-						   	'<label for=""> Nombre a la encuesta</label>'+
-						   	'<input type="text" id="name_poll">'+
-						   	'<input type="submit" value="Siguiente" id="new_quest">'+
-					   	  '</form>')
+	$('#div_create').append('<div class="row">'+
+								'<form action="">'+
+									'<div class="six columns">'+
+								   		'<label for=""> Nombre de la encuesta</label>'+
+								   		'<div class="row">'+
+									   		'<div class="five columns">'+
+									   			'<input type="text" id="name_poll">'+
+									   		'</div>'+
+									   		'<div class="seven columns">'+
+									   			'<input type="submit" class="button-primary" value="Crear encuesta" id="new_quest">'+
+									   		'</div>'+
+									   	'</div>'+
+									'</div>'+
+								'</form>'+
+				   	  		'</div>')
+
+
 })
 
 $(document).on('click', '#new_quest', function(e){
@@ -385,11 +398,35 @@ $(document).on('change', '#tipo_resp', function(e){
 		$('#save_quest').removeAttr('disabled')
 	}
 
+	/*'<div class="row">'+
+		'<form action="">'+
+			'<div class="six columns">'+
+		   		'<label for=""> Nombre de la encuesta</label>'+
+		   		'<div class="row">'+
+			   		'<div class="five columns">'+
+			   			'<input type="text" id="name_poll">'+
+			   		'</div>'+
+			   		'<div class="seven columns">'+
+			   			'<input type="submit" class="button-primary" value="Crear encuesta" id="new_quest">'+
+			   		'</div>'+
+			   	'</div>'+
+			'</div>'+
+		'</form>'+
+  		'</div>'
+*/
 	if (tipo_resp == 2 || tipo_resp == 3 || tipo_resp == 4) {
 		$('#respuestas').empty()
 		$('#div_cuantas_resp').empty()
-		$('#div_cuantas_resp').append('¿Cuantas? <input id="many_opts" type="text"><br>'+
-									'<input type="button" value="Crear respuestas" id="make_opt">')
+		$('#div_cuantas_resp').append('<label for=""> ¿Cuantas? </label>'+
+									  '<div class="row">'+
+		   							  		'<div class="seven columns">'+
+								  		  		'<input class="u-full-width" id="many_opts" type="text"><br>'+
+								  	  		'</div>'+
+		   							  		'<div class="five columns">'+
+										  		'<input type="button" class="button-primary" value="Crear respuestas" id="make_opt">'+
+									  		'</div>'+
+			   						  '</div>')
+
 		$('#save_quest').attr('disabled', 'disabled')
 	}
 
@@ -407,16 +444,79 @@ $(document).on('click', '#make_opt', function(e){
 	e.preventDefault()
 
 	$('#save_quest').removeAttr('disabled')
+	var respuestas = "";
+	var cont = 0;
+	var row = 0;
+	//bandera = false
 
 	var cuantas = $('#many_opts').val()
 	//console.log(cuantas)
 
 	$('#respuestas').empty()
 
+
+	/*if (cont % 1 != 0) {
+		cont = Math.floor(cont)+1;
+	}else{
+		cont = Math.floor(cont);
+	}*/
+
 	for(var i = 1; i <= cuantas; i++){
-		//console.log(i)
-		$('#respuestas').append('Respuesta '+i+': <input id="resp'+i+'" type="text"><br>')
+		//console.log(cont)
+		cont = cont+1;
+
+		if (cont < 5) {
+			//console.log("nada")
+			respuestas = respuestas+'<div id="resp_three_columns_'+i+'" class="three columns"></div>';
+			//row = 0;
+		}else{
+			//console.log("hola")
+			respuestas = respuestas+'<div class="row">'+
+										'<div class="new_resp" id="">'+
+											'<div id="resp_three_columns_'+i+'" class="three columns">'+
+											'</div>'+
+										'</div>'+
+									'</div>';
+									cont = 0;
+		}
+
+		$('#respuestas').append(respuestas)
+
+		if (cont == 0) {
+			$('#respuestas').attr('id', '')
+			$('.new_resp').attr('id', 'respuestas')	
+		}
+		
+
+console.log(cont)
+//
+		/*if (row == 1) {
+			$('#respuestas_1').append(respuestas)
+			cont = 1;
+		}else{
+			$('#respuestas').append(respuestas)
+		}
+
+		if (cont == 5)
+			row = 1;*/
+
+		$('#resp_three_columns_'+i).append('<label for="">Respuesta '+i+': </label>'+
+									   '<input id="resp'+i+'" type="text">')
+
+		/*if (cont < 5) {
+			$('#resp_three_columns_'+i+1).append('<label for="">Respuesta '+i+': </label>'+
+									   '<input id="resp'+i+'" type="text">')
+		}else{
+			$('#resp_three_columns2_'+i+1).append('<label for="">Respuesta '+i+': </label>'+
+									   '<input id="resp'+i+'" type="text">')
+					}*/
+		
+		respuestas = "";
 	}
+
+	$('.old_resp').attr('id', 'respuestas');
+	$('.new_resp').attr('id', '');
+
 })
 
 
@@ -527,7 +627,7 @@ $(document).on('click', '#send_poll', function(e){
 
 function new_quest(preguntas){
 	$('#div_create').empty()
-	$('#div_create').append('<form id="preg_'+preguntas+'" action="">'+
+	/*$('#div_create').append('<form id="preg_'+preguntas+'" action="">'+
 							'<h4>Pregunta '+preguntas+'</h4>'+
 							'Contenido <input id="contenido" type="text"><br><br>'+
 							'Tipo de respuesta '+
@@ -543,8 +643,41 @@ function new_quest(preguntas){
 							'<div id="respuestas">'+
 							'</div><br>'+
 							'<input type="submit" value="Guardar" disabled id="save_quest">'+
-						'</form>')
+						'</form>')*/
 
+	$('#div_create').append('<form action="" id="preg_'+preguntas+'">'+
+								'<div class="row">'+
+									'<div class="six columns">'+
+										'<h4>Pregunta '+preguntas+'</h4>'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="six columns">'+
+										'<label for="">Contenido</label>'+
+										'<input id="contenido" class="u-full-width" type="text">'+
+									'</div>'+
+									'<div class="six columns">'+
+										'<label for="">Tipo de respuesta</label>'+
+										'<select id="tipo_resp" class="u-full-width" name="" id="">'+
+											'<option value="0" selected disabled>Seleccione una opcion</option>'+
+											'<option value="1">Abierta</option>'+
+											'<option value="2">Opcion multiple</option>'+
+											'<option value="3">Multiseleccion</option>'+
+											'<option value="4">Select</option>'+
+										'</select>'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="six columns">'+
+										'<div id="div_cuantas_resp"></div>'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="old_resp" id="respuestas"></div>'+
+								'</div>'+
+							'</form>')
+
+//$('#respuestas').empty()
 }
 
 var contenido_txt_cant = "";

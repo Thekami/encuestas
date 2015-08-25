@@ -35,7 +35,18 @@
 	
 
 	<div class="container">
-
+		<!-- <div class="row">
+			<form action="">
+				<div class="six columns">
+					<label for="">Holq</label>
+						<input class="u-full-width" type="text">
+				</div>
+				<div class="six columns">
+					<label for="">Holq</label>
+						<input class="u-full-width" type="text">
+				</div>
+			</form>
+		</div> -->
 		<!-- ============ Seccion para editar  ================= -->
 
 		<div id="div_edit" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
@@ -51,8 +62,8 @@
 
 		<!-- ============ Seccion para crear nueva encuesta  ================= -->
 
-		<div id="div_create" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%"></div>
-	
+		<div id="div_create" ></div>
+		
 		
 
 		<!-- ============ Seccion para ver la encuesta a editar  ================= -->
