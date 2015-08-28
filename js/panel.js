@@ -116,21 +116,27 @@ $(document).on('change', '#select_quest', function(e){
 
 			$('#div_show_edit').empty()
 			$('#div_show_edit').css('display', 'block')
-			$('#div_show_edit').append('<form id="a" action="">'+
-									'Contenido <input id="contenido" type="text" value="'+data[0]["contenido"]+'"><br><br>'+
-									'Tipo de respuesta '+
-										'<select id="tipo_resp" name="" id="">'+
-											'<option value="0" disabled>Seleccione una opcion</option>'+
-											'<option value="1">Abierta</option>'+
-											'<option value="2">Opcion multiple</option>'+
-											'<option value="3">Multiseleccion</option>'+
-										'</select><br><br>'+
-									'<div id="div_cuantas_resp">'+
-									'</div>'+
-									'<div id="respuestas">'+
-									'</div><br>'+
-									'<input type="submit" value="Guardar" disabled id="save_quest_edit">'+
-								'</form>')
+			$('#div_show_edit').append('<br><div class="linea_divisoria"></div><br>'+
+									   '<form id="a" action="">'+
+										  '<div class="row">'+
+											    '<div class="six columns">'+
+											        '<label>Contenido</label>'+
+											        '<input class="u-full-width" id="contenido" type="text" value="'+data[0]["contenido"]+'"><br><br>'+
+										        '</div>'+
+										        '<div class="six columns">'+
+											        '<label>Tipo de respuesta</label>'+
+											        '<select class="u-full-width" id="tipo_resp" name="" id="">'+
+												        '<option value="0" disabled>Seleccione una opcion</option>'+
+												        '<option value="1">Abierta</option>'+
+												        '<option value="2">Opcion multiple</option>'+
+												        '<option value="3">Multiseleccion</option>'+
+											        '</select><br><br>'+
+											    '</div>'+
+										  '</div>'+
+						      			  '<div id="div_cuantas_resp"></div>'+
+									      '<div id="respuestas" class="row"></div><br>'+
+									      '<input type="submit" value="Guardar" disabled id="save_quest_edit">'+
+								      '</form>')
 
 			contenido_edit = $('#contenido').val() //variable global
 
@@ -347,10 +353,10 @@ $(document).on('click', '#make_poll', function(e){
 									'<div class="six columns">'+
 								   		'<label for=""> Nombre de la encuesta</label>'+
 								   		'<div class="row">'+
-									   		'<div class="five columns">'+
+									   		'<div class="six columns">'+
 									   			'<input type="text" id="name_poll">'+
 									   		'</div>'+
-									   		'<div class="seven columns">'+
+									   		'<div class="six columns">'+
 									   			'<input type="submit" class="button-primary" value="Crear encuesta" id="new_quest">'+
 									   		'</div>'+
 									   	'</div>'+
@@ -398,22 +404,6 @@ $(document).on('change', '#tipo_resp', function(e){
 		$('#save_quest').removeAttr('disabled')
 	}
 
-	/*'<div class="row">'+
-		'<form action="">'+
-			'<div class="six columns">'+
-		   		'<label for=""> Nombre de la encuesta</label>'+
-		   		'<div class="row">'+
-			   		'<div class="five columns">'+
-			   			'<input type="text" id="name_poll">'+
-			   		'</div>'+
-			   		'<div class="seven columns">'+
-			   			'<input type="submit" class="button-primary" value="Crear encuesta" id="new_quest">'+
-			   		'</div>'+
-			   	'</div>'+
-			'</div>'+
-		'</form>'+
-  		'</div>'
-*/
 	if (tipo_resp == 2 || tipo_resp == 3 || tipo_resp == 4) {
 		$('#respuestas').empty()
 		$('#div_cuantas_resp').empty()
@@ -430,14 +420,6 @@ $(document).on('change', '#tipo_resp', function(e){
 		$('#save_quest').attr('disabled', 'disabled')
 	}
 
-	/*if (tipo_resp == 3) {
-		$('#respuestas').empty()
-		$('#div_cuantas_resp').empty()
-		$('#div_cuantas_resp').append('¿Cuantas? <input id="many_opts" type="text"><br>'+
-									'<input type="button" value="Crear respuestas" id="make_opt">')
-		$('#save_quest').attr('disabled', 'disabled')
-	}*/
-
 })
 
 $(document).on('click', '#make_opt', function(e){
@@ -446,70 +428,41 @@ $(document).on('click', '#make_opt', function(e){
 	$('#save_quest').removeAttr('disabled')
 	var respuestas = "";
 	var cont = 0;
-	var row = 0;
-	//bandera = false
+	var bandera = false;
 
 	var cuantas = $('#many_opts').val()
-	//console.log(cuantas)
 
 	$('#respuestas').empty()
 
-
-	/*if (cont % 1 != 0) {
-		cont = Math.floor(cont)+1;
-	}else{
-		cont = Math.floor(cont);
-	}*/
-
 	for(var i = 1; i <= cuantas; i++){
-		//console.log(cont)
 		cont = cont+1;
 
-		if (cont < 5) {
-			//console.log("nada")
-			respuestas = respuestas+'<div id="resp_three_columns_'+i+'" class="three columns"></div>';
-			//row = 0;
+		if (cont <= 4) {
+
+			respuestas = respuestas+'<div id="resp_three_columns_'+i+'" name="'+cont+'" class="three columns"></div>';
+
 		}else{
-			//console.log("hola")
-			respuestas = respuestas+'<div class="row">'+
-										'<div class="new_resp" id="">'+
-											'<div id="resp_three_columns_'+i+'" class="three columns">'+
+
+			cont = 1;
+			respuestas = respuestas+'<div class="new_resp" id="">'+
+											'<div id="resp_three_columns_'+i+'" name="'+cont+'" class="three columns">'+
 											'</div>'+
-										'</div>'+
-									'</div>';
-									cont = 0;
+										'</div>'
+									;
+									bandera = true;						
 		}
 
 		$('#respuestas').append(respuestas)
 
-		if (cont == 0) {
+		if (bandera) {
 			$('#respuestas').attr('id', '')
 			$('.new_resp').attr('id', 'respuestas')	
 		}
-		
+		bandera = false;
 
-console.log(cont)
-//
-		/*if (row == 1) {
-			$('#respuestas_1').append(respuestas)
-			cont = 1;
-		}else{
-			$('#respuestas').append(respuestas)
-		}
-
-		if (cont == 5)
-			row = 1;*/
 
 		$('#resp_three_columns_'+i).append('<label for="">Respuesta '+i+': </label>'+
 									   '<input id="resp'+i+'" type="text">')
-
-		/*if (cont < 5) {
-			$('#resp_three_columns_'+i+1).append('<label for="">Respuesta '+i+': </label>'+
-									   '<input id="resp'+i+'" type="text">')
-		}else{
-			$('#resp_three_columns2_'+i+1).append('<label for="">Respuesta '+i+': </label>'+
-									   '<input id="resp'+i+'" type="text">')
-					}*/
 		
 		respuestas = "";
 	}
@@ -674,6 +627,12 @@ function new_quest(preguntas){
 								'</div>'+
 								'<div class="row">'+
 									'<div class="old_resp" id="respuestas"></div>'+
+								'</div>'+
+								'<br>'+
+								'<div class="row">'+
+									'<div class="six columns">'+
+										'<input type="submit" class="button-primary" value="Guardar" disabled id="save_quest">'+
+									'</div>'+
 								'</div>'+
 							'</form>')
 

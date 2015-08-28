@@ -49,51 +49,58 @@
 		</div> -->
 		<!-- ============ Seccion para editar  ================= -->
 
-		<div id="div_edit" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
-			
-			<select name="" id="select_poll"></select>
+		<div id="div_edit" class="row">
 
-			<select name="" id="select_quest">
-				<option value="0" selected disabled>Selecione una encuesta</option>
-			</select>
+			<div class="six columns">
+				<select name="" class="u-full-width" id="select_poll"></select>
+			</div>
+			<div class="six columns">
+				<select name="" class="u-full-width" id="select_quest">
+					<option value="0" selected disabled>Selecione una encuesta</option>
+				</select>
+			</div>
 
 		</div>
 		
 
 		<!-- ============ Seccion para crear nueva encuesta  ================= -->
 
-		<div id="div_create" ></div>
+		<div id="div_create"></div>
 		
 		
 
 		<!-- ============ Seccion para ver la encuesta a editar  ================= -->
 
-		<div id="div_show_edit" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
-			
-
-		</div>
+		<div id="div_show_edit"></div>
 
 
 		<!-- ============ Seccion para mostrar la opcion de "crear nueva pregunta"  ================= -->
 
-		<div id="div_btn_new_quest" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
+		<div id="div_btn_new_quest">
 			
-			<form action="">
-				<label for=""> Nueva pregunta</label>
-				<input type="submit" value="Crear" id="new_quest">
-			</form>
-
+			<div class="row">
+				<form action="">
+					<div class="six columns">
+						<label for=""> Nueva pregunta</label>
+						<input class="button-primary" value="Crear" id="new_quest" type="submit">
+					</div>
+				</form>
+			</div>
 
 		</div>
 
 		<!-- ============ Seccion para mostrar la opcion de guardar la encuesta  ================= -->
 
-		<div id="div_btn_send_poll" style="border: solid 1px; padding: 1% 3%; margin: 1% 0% 2% 0%">
+		<div id="div_btn_send_poll">
 			
-			<form action="">
-				<label for=""> Enviar</label>
-				<input type="submit" value="Enviar" id="send_poll">
-			</form>
+			<div class="row">
+				<form action="">
+					<div class="six columns">
+						<label for=""> Enviar encuesta </label>
+						<input class="button-primary" value="Enviar" id="send_poll" type="submit">
+					</div>
+				</form>
+			</div>
 
 
 		</div>

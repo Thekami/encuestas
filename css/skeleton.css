@@ -34,6 +34,9 @@
     src: local("Raleway SemiBold"), local("Raleway-SemiBold"), url("http://fonts.gstatic.com/s/raleway/v9/xkvoNo9fC8O2RDydKj12bwzyDMXhdD8sAj6OAJTFsBI.woff2") format("woff2"), url("http://fonts.gstatic.com/s/raleway/v9/xkvoNo9fC8O2RDydKj12b73hpw3pgy2gAi-Ip7WPMi0.woff") format("woff");
   }
 
+.linea_divisoria{
+  border-top: solid 1px #bcb8ae;
+}
 
 
 /*.custom-container {
@@ -180,7 +183,7 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 800px;
   margin: 0 auto 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
