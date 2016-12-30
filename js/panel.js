@@ -93,7 +93,6 @@ $(document).on('change', '#select_poll', function(e){
 
 })
 
-
 $(document).on('change', '#select_quest', function(e){
 	e.preventDefault()
 
@@ -169,13 +168,11 @@ $(document).on('change', '#select_quest', function(e){
 
 })
 
-
 $(document).on('keyup', '.respuestas, #contenido', function(){
 
 	$('#save_quest_edit').removeAttr('disabled')
 
 })
-
 
 $(document).on('click', '#save_quest_edit', function(e){
 	e.preventDefault()
@@ -378,11 +375,11 @@ $(document).on('click', '#new_quest', function(e){
 
 		preguntas++;
 
-		if (preguntas == 1)
+		if (preguntas == 1) // Si es la primera pregunta de la encuesta...
 			name_poll = $('#name_poll').val();
 			console.log(name_poll)
 
-		new_quest(preguntas)
+		nuevaPregunta(preguntas)
 
 	}else{
 		alert("Proporcione primero el nombre de la encuesta")
@@ -481,31 +478,35 @@ $(document).on('click', '#save_quest', function(e){
 	var contenido = $('#contenido').val()
 	var tipo_resp = $('#tipo_resp').val()
 
-	//console.log(contenido)
-	//console.log(tipo_resp)
-		
+	
+	// Se llena un json con la infomación que se va a enviar
+	// A la variable name_poll se le asignó valor cuando se 
+	// creó la encuesta
 	var pregunta = {name_poll: name_poll, contenido: contenido, 
 					tipo_resp: tipo_resp, cuantas_respuestas: "", 
 					respuestas: "", no_preg: preguntas}
 
+	// Si es una pregunta Abierta (tipo 1) entonces se deja
+	// en cero los campos que no se van a necesitar
 	if (tipo_resp == 1) {
 		pregunta.cuantas_respuestas = 0;
 		pregunta.respuestas = 0;
 		pregunta.cuantas_respuestas = 0;
-
 	}
 
+	// Si la pregunta es de los demás tipos entonces...
 	if (tipo_resp == 2 || tipo_resp == 3 || tipo_resp == 4) {
 
 		var	cuantas = $('#many_opts').val()
 		pregunta.cuantas_respuestas = cuantas;
+		
 		var respuestas = [];
 
 		for(var i = 1; i <= cuantas; i++){
-			if ($('#resp'+i+'').val() != "") {
+			if ($('#resp'+i+'').val() != "")
 				respuestas.push($('#resp'+i+'').val())
-			}
 		}
+		
 		pregunta.respuestas = respuestas;
 
 	}
@@ -578,25 +579,8 @@ $(document).on('click', '#send_poll', function(e){
 })
 
 
-function new_quest(preguntas){
+function nuevaPregunta(preguntas){
 	$('#div_create').empty()
-	/*$('#div_create').append('<form id="preg_'+preguntas+'" action="">'+
-							'<h4>Pregunta '+preguntas+'</h4>'+
-							'Contenido <input id="contenido" type="text"><br><br>'+
-							'Tipo de respuesta '+
-								'<select id="tipo_resp" name="" id="">'+
-									'<option value="0" selected disabled>Seleccione una opcion</option>'+
-									'<option value="1">Abierta</option>'+
-									'<option value="2">Opcion multiple</option>'+
-									'<option value="3">Multiseleccion</option>'+
-									'<option value="4">Select</option>'+
-								'</select><br><br>'+
-							'<div id="div_cuantas_resp">'+
-							'</div>'+
-							'<div id="respuestas">'+
-							'</div><br>'+
-							'<input type="submit" value="Guardar" disabled id="save_quest">'+
-						'</form>')*/
 
 	$('#div_create').append('<form action="" id="preg_'+preguntas+'">'+
 								'<div class="row">'+
@@ -636,7 +620,6 @@ function new_quest(preguntas){
 								'</div>'+
 							'</form>')
 
-//$('#respuestas').empty()
 }
 
 var contenido_txt_cant = "";

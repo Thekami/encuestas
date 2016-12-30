@@ -1,65 +1,71 @@
 <?php 
-//require('phpmailer.php');
 
-class mysql{
+	class mysql{
 
-var $dbCon;
+		var $dbCon;
 
-	function __construct(){
-		$this->conect();
-	}
-
-	public function conect(){
-		$enlace = mysql_connect('localhost', 'root', 'toor');
-		//$enlace = mysql_connect('localhost', 'root', 'toor');
-		//coreccion en la ñ
-		mysql_query("SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'", $enlace);
-		//$dbCon = mysql_select_db('metsi', $enlace);
-		$dbCon = mysql_select_db('encuestas_cdj', $enlace);
-		
-		
-		if (!$dbCon) {
-		  $msg = "No pudo conectarse -- Error: " . mysql_error();
-		}else{
-		  $msg = "Conectado satisfactoriamente ---- ";
-		}
-		return $msg;
-
-		//$this->query("SET NAMES 'utf-8'");
-	}
-
-	public function query($consult){
-
-		$result = mysql_query($consult);
-		//return mysql_query($consult);
-		if($result){
-		 	return $result;
-		}else{
-			return "Error: ".mysql_error();
+		function __construct(){
+			$this->conect();
 		}
 
-	}
+		public function conect(){
+			// $this->dbCon = new mysqli('redcj.db.8957254.hostedresource.com', 'redcj', 'F04d@2075117', 'redcj');
+			$this->dbCon = new mysqli('localhost', 'root', 'toortoor', 'encuestas');
+			$this->dbCon->set_charset("utf8");
+			if(!$this->dbCon)
+				echo $this->show_error();
 
-	public function query_assoc($consult){
+			// $this->dbCon->autocommit(false);
+		}
 
-		$vec = array();
-		if($result = $this->query($consult)){
-			while($fila = mysql_fetch_assoc($result)){ 
-				$vec[] = $fila; 
+		public function query($consult){
+			$query = $this->dbCon->query($consult);
+			if(!$query){
+				$this->show_error();
+			}
+			else{
+				return $query;
 			}
 		}
-		return $vec;
+
+		public function next_result(){
+			$this->dbCon->next_result();
+		}
+
+		private function show_error(){
+			return $this->dbCon->connect_error;
+		}
+
+		public function query_assoc($consult){
+			$vec = array();
+			if($result = $this->query($consult)){
+				while($fila = $result->fetch_assoc()){ $vec[] = $fila; }
+			}
+			return $vec;
+		}
+
+		public function query_row($consult){
+			$vec = array();
+			if($result = $this->query($consult)){
+				while($fila = $result->fetch_row()){ $vec[] = $fila; }
+			}
+			return $vec;
+		}
+		
+		public function exit_conect(){
+			mysqli_close($this->dbCon);
+		}
+
+		public function destroy(){
+			session_destroy();
+			header("Location: /index.php");
+			// header("Location: /angel/rutas");
+		}
+
+		public function obtenerId(){
+			return $this->dbCon->insert_id;
+		}
+
+	 
 	}
-
-	public function exit_conect(){
-		mysql_close($this->dbCon);
-	}
-
-	public function destroy(){
-		session_destroy();
-		return 1;
-	}
-
-
-}
 ?>

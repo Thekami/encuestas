@@ -14,15 +14,15 @@ Class MainClass extends mysql {
 		//$password = "Á(&$8jÑ{u·$^¨ç".$password;
 		//$password = hash('sha256',$password);
 
-		$consult = "SELECT id FROM `users` WHERE 
-			`username` = '$user' and `password` = '$password' ";
+		$consult = "SELECT iduser FROM users WHERE 
+			username = '$user' and password = '$password'";
 
 		$datos = $this->query_assoc($consult);
 
 		if(count($datos)>0){
 			//session_start();
 			$_SESSION["username"] = $user;
-			$_SESSION["id"] = $datos[0]['id'];
+			$_SESSION["iduser"] = $datos[0]['iduser'];
 			$response = true;
 		}
 		echo json_encode($response);

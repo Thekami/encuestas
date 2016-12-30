@@ -74,7 +74,7 @@
 		<div id="div_show_edit"></div>
 
 
-		<!-- ============ Seccion para mostrar la opcion de "crear nueva pregunta"  ================= -->
+		<!-- ======== Seccion para mostrar la opcion de "crear nueva pregunta"  ==== -->
 
 		<div id="div_btn_new_quest">
 			
